@@ -7,13 +7,13 @@ class User(models.Model):
 class Search(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.TextField(max_length=255)
-    numSources = models.IntegerField(max_value=6)
+    numSources = models.IntegerField()
     citationFormat = models.CharField(max_length=3)
     searchDate = models.DateField()
 
-    results = []
+    '''results = []
     for i in range(numSources):
-        results.append(models.ForeignKey(models.Result, on_delete=models.CASCADE))
+        results.append(models.ForeignKey(models.Result, on_delete=models.CASCADE))'''
 
 class Result(models.Model):
     sourceCompany = models.TextField()
