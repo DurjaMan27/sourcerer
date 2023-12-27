@@ -12,13 +12,13 @@ class NewSearchForm(forms.Form):
     ]
 
     topicQuestion = forms.CharField(label="Topic", widget=forms.TextInput(attrs={'placeholder': 'Research Question'}), required=True)
-    startingBid = forms.IntegerField(label="Number of Sources", required=False, default=3)
+    startingBid = forms.IntegerField(label="Number of Sources", required=False)
     citationFormat = forms.ChoiceField(label="Citation Format", choices=CATEGORY_CHOICES, required=True)
 
 def homepage(request):
     if request.method == 'POST':
         print("hello")
     else:
-        return HttpResponse(request, "sourcing/homepage.html", {
+        return render(request, "sourcing/homepage.html", {
             'form': NewSearchForm
         })
