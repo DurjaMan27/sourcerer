@@ -13,7 +13,7 @@ class Search(models.Model):
 
     results = []
     for i in range(numSources):
-        results.append(models.ForeignKey(User, on_delete=models.CASCADE))
+        results.append(models.ForeignKey(models.Result, on_delete=models.CASCADE))
 
 class Result(models.Model):
     sourceCompany = models.TextField()
