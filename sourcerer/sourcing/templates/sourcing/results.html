@@ -9,15 +9,16 @@
     <h2>Here are the {{ search.numSources }} results below:</h2>
     <ol>
         {% for result in results %}
-        <li>
-            <li>Result</li>
+        <li>Result
             <ul>
                 <li>{{ result.sourceCompany }}</li>
                 <li>{{ result.sourceURL }}</li>
-                <li>Summary: {{ result.summary }}</li>
-                <li>Citation: {{ result.citation }}</li>
+                <li>{{ result.summary }}</li>
+                <li>{{ result.citation }}</li>
             </ul>
         </li>
         {% endfor %}
     </ol>
+
+    <a href="{% url 'homepage' %}"><button>Return to Homepage</button></a>
 {% endblock %}
