@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.http import HttpResponse, HttpResponseRedirect
 from django import forms
 from .models import User, Search, Result
-from datetime import date
+from datetime import date, datetime
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
@@ -81,7 +81,7 @@ def homepage(request):
             numSources = form.cleaned_data["numSources"]
             citation = form.cleaned_data["citationFormat"]
 
-            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citation=citation, searchDate=timezone.now(), results=None)
+            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citation=citation, searchDate=str(datetime.date()), results=None)
 
             query = "My research topic/question is '" + question + "'. Given this question, please give me " + numSources + " sources that will help me conduct research on the topic. "
             query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
