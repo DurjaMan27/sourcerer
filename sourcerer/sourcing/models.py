@@ -10,7 +10,7 @@ class Search(models.Model):
     numSources = models.IntegerField()
     citationFormat = models.CharField(max_length=3)
     searchDate = models.DateField()
-
+    results = models.ManyToManyField(Result, on_delete=models.CASCADE)
     '''results = []
     for i in range(numSources):
         results.append(models.ForeignKey(models.Result, on_delete=models.CASCADE))'''
@@ -20,3 +20,5 @@ class Result(models.Model):
     sourceURL = models.URLField()
     summary = models.TextField()
     citation = models.TextField()
+
+print("hello")
