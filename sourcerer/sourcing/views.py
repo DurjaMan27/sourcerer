@@ -4,6 +4,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django import forms
 from .models import User, Search, Result
 from datetime import date, datetime
+from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
@@ -92,15 +93,18 @@ def homepage(request):
             genai.configure(api_key="")
             model = genai.GenerativeModel('gemini-pro')
 
-            response = list(model.generate_content(query))
+            response = model.generate_content(query)
+            print(response.text)
+            response = response.text.split(" ")
+            print(response[0])
 
             for i in range(1, numSources+1):
                 response = response[response.index(f"{i}.")]
 
-                title, response = response[0:response.index("~")]
-                url, response = response[1:response.index("~")]
-                summary, response = response[1:response.index("~")]
-                citation, response = response[1:response.index("~")]
+                title, response = response[response.index("**Title:**")+9:response.index("**URL:**")]
+                url, response = response[response.index("**URL:**")+7:response.index("**Summary:**")]
+                summary, response = response[response.index("**Summary:**")+11:response.index("**Citation:**")]
+                citation, response = response[response.index("**Citation**")+12]
 
                 result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
                 search.results.add(result)
