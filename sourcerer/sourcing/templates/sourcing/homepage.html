@@ -2,8 +2,9 @@
 
 {% block body %}
     <h2>This is the homepage. Below is the form. You can't do anything with it yet.</h2>
-    <form>
+    <form action="{% url 'homepage' %}" method="post">
+        {% csrf_token %}
         {{ form }}
-        <button type="submit">Generate Sources</button>
+        <input type="submit" value="Generate Sources">
     </form>
 {% endblock %}
