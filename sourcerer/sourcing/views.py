@@ -101,7 +101,7 @@ def homepage(request):
                 summary, response = response[1:response.index("~")]
                 citation, response = response[1:response.index("~")]
 
-                result = Result.objects.create(title=title, sourceURL=url, summary=summary, citation=citation)
+                result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
                 search.results.add(result)
 
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))

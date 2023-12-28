@@ -5,7 +5,7 @@ from django.contrib.auth.models import AbstractUser
 class User(AbstractUser):
     pass
 class Result(models.Model):
-    title = models.TextField()
+    sourceCompany = models.TextField()
     sourceURL = models.URLField()
     summary = models.TextField()
     citation = models.TextField()
