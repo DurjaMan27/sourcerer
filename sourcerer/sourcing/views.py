@@ -44,7 +44,7 @@ def homepage(request):
                 result = Result.objects.create()
                 print()
 
-            return HttpResponseRedirect(reverse('results'))
+            return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
         else:
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm
@@ -54,5 +54,10 @@ def homepage(request):
             'form': NewSearchForm
         })
 
-def results(request):
-    return render(request, "sourcing/results.html")
+def results(request, searchID):
+    search = Search.objects.get(pk=searchID)
+    results = search.results.all()
+    return render(request, "sourcing/results.html", {
+        "search": search,
+        "results": results
+    })
