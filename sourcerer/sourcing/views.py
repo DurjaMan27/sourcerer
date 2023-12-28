@@ -88,7 +88,8 @@ def homepage(request):
             query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
             query += "Along with the URLs to these sources, please give me a 1-2 sentence summary of each source as well as a(n) " + citation + " citation in proper format."
             query += "These sources must be in numbered format, with the content title first, the link next, the summary after, and the citation last. "
-            query += "Please separate each requested item for each source with a ~"
+            query += "Please make sure that each item for a source has its name before it. For example, before returning the title, please add 'Title:'."
+            query += "Do the same for all other pieces of content that I asked for and make sure that each one is bolded."
 
             genai.configure(api_key="")
             model = genai.GenerativeModel('gemini-pro')
