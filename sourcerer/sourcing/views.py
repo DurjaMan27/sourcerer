@@ -94,16 +94,6 @@ def homepage(request):
             query += "Make sure that the pieces of content being returned are labeled 'Title', 'Link', 'Summary', and 'Citation'. No other labels are allowed."
 
             genai.configure(api_key="")
-            '''model = genai.GenerativeModel('text-bison@001')
-
-            #model = TextGenerationModel.from_pretrained("text-bison@001")
-
-            response = model.generate_content(query)
-            print(response.text)
-            #response = response.text.split(" ")
-            response = response.text
-            print(response)'''
-
             defaults = {
                 'model': 'models/text-bison-001',
                 'temperature': 0.7,
@@ -115,15 +105,6 @@ def homepage(request):
                 prompt = query
             )
             response = response.result
-
-            '''client = glm.DiscussServiceClient(
-                client_options={'api_key':''})
-            request = glm.GenerateMessageRequest(
-                model='models/chat-bison-001',
-                prompt=glm.MessagePrompt(
-                    messages=[glm.Message(content=query)]))
-            response = client.generate_message(request)
-            print(response)'''
 
             for i in range(1, numSources+1):
                 if i < numSources:
