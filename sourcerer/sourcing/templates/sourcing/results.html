@@ -2,4 +2,22 @@
 
 {% block body %}
     <h1>This is the results page.</h1>
+
+    <h2>You asked the research question of "{{ search.topic }}"</h2>
+    <h4>{{ search.citation }} format</h4>
+
+    <h2>Here are the {{ search.numSources }} results below:</h2>
+    <ol>
+        {{ for result in results }}
+        <li>
+            <li>Result</li>
+            <ul>
+                <li>{{ result.title }}</li>
+                <li>{{ result.sourceURL }}</li>
+                <li>Summary: {{ result.summary }}</li>
+                <li>Citation: {{ result.citation }}</li>
+            </ul>
+        </li>
+        {{ endfor}}
+    </ol>
 {% endblock %}
