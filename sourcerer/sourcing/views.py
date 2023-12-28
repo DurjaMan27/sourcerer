@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
+from google.ai import generativelanguage as glm
 from django.utils import timezone
 
 # Create your views here.
@@ -93,12 +94,36 @@ def homepage(request):
             query += "Make sure that the pieces of content being returned are labeled 'Title', 'Link', 'Summary', and 'Citation'. No other labels are allowed."
 
             genai.configure(api_key="")
-            model = genai.GenerativeModel('gemini-pro')
+            '''model = genai.GenerativeModel('text-bison@001')
+
+            #model = TextGenerationModel.from_pretrained("text-bison@001")
 
             response = model.generate_content(query)
             print(response.text)
             #response = response.text.split(" ")
             response = response.text
+            print(response)'''
+
+            defaults = {
+                'model': 'models/text-bison-001',
+                'temperature': 0.7,
+                'candidate_count': 1,
+            }
+
+            response = genai.generate_text(
+                **defaults,
+                prompt = query
+            )
+            response = response.result
+
+            '''client = glm.DiscussServiceClient(
+                client_options={'api_key':''})
+            request = glm.GenerateMessageRequest(
+                model='models/chat-bison-001',
+                prompt=glm.MessagePrompt(
+                    messages=[glm.Message(content=query)]))
+            response = client.generate_message(request)
+            print(response)'''
 
             for i in range(1, numSources+1):
                 if i < numSources:
@@ -108,10 +133,15 @@ def homepage(request):
 
                 print(miniresponse)
 
-                title = miniresponse[miniresponse.find("**Title:**") : miniresponse.find("**Link:**")]
-                url = miniresponse[miniresponse.find("**Link:**") : miniresponse.find("**Summary:**")]
-                summary = miniresponse[miniresponse.find("**Summary:**") : miniresponse.find("**Citation:**")]
-                citation = miniresponse[miniresponse.find("**Citation**")]
+                title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
+                url = miniresponse[miniresponse.find("Link:") : miniresponse.find("Summary:")]
+                summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
+                citation = miniresponse[miniresponse.find("Citation:"):]
+
+                title = title.replace("*", "")
+                url = url.replace("*", "")
+                summary = summary.replace("*", "")
+                citation = citation.replace("*", "")
 
                 result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
                 search.results.add(result)
