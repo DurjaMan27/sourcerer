@@ -4,21 +4,15 @@ from django.db import models
 class User(models.Model):
     pass
 
+class Result(models.Model):
+    sourceCompany = models.TextField()
+    sourceURL = models.URLField()
+    summary = models.TextField()
+    citation = models.TextField()
 class Search(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     topic = models.TextField(max_length=255)
     numSources = models.IntegerField()
     citationFormat = models.CharField(max_length=3)
     searchDate = models.DateField()
-    results = models.ManyToManyField(Result, on_delete=models.CASCADE)
-    '''results = []
-    for i in range(numSources):
-        results.append(models.ForeignKey(models.Result, on_delete=models.CASCADE))'''
-
-class Result(models.Model):
-    sourceCompany = models.TextField()
-    sourceURL = models.URLField()
-    summary = models.TextField()
-    citation = models.TextField()
-
-print("hello")
+    results = models.ManyToManyField(Result)
