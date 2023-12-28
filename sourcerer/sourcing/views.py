@@ -49,8 +49,7 @@ def homepage(request):
                 citation, response = response[1:response.index("~")]
 
                 result = Result.objects.create(title=title, sourceURL=url, summary=summary, citation=citation)
-
-                print()
+                search.results.add(result)
 
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
         else:
