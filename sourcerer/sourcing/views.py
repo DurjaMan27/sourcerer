@@ -32,15 +32,14 @@ def login_view(request):
         # Check if authentication successful
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("homepage"))
         else:
-            return render(request, "auctions/login.html", {
+            return render(request, "sourcing/login.html", {
                 "message": "Invalid username and/or password."
             })
     else:
-        return render(request, "auctions/login.html")
+        return render(request, "sourcing/login.html")
 
-@login_required
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("homepage"))
@@ -55,7 +54,7 @@ def register(request):
         password = request.POST["password"]
         confirmation = request.POST["confirmation"]
         if password != confirmation:
-            return render(request, "auctions/register.html", {
+            return render(request, "sourcing/register.html", {
                 "message": "Passwords must match."
             })
 
@@ -64,13 +63,13 @@ def register(request):
             user = User.objects.create_user(username, email, password)
             user.save()
         except IntegrityError:
-            return render(request, "auctions/register.html", {
+            return render(request, "sourcing/register.html", {
                 "message": "Username already taken."
             })
         login(request, user)
         return HttpResponseRedirect(reverse("homepage"))
     else:
-        return render(request, "auctions/register.html")
+        return render(request, "sourcing/register.html")
 
 def homepage(request):
     if request.method == 'POST':
