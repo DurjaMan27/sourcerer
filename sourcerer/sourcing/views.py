@@ -30,12 +30,19 @@ def homepage(request):
             search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citation=citation, searchDate=date.today(), results=None)
 
             query = "My research topic/question is '" + question + "'. Given this question, please give me " + numSources + " sources that will help me conduct research on the topic. "
-            query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. "
+            query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
             query += "Along with the URLs to these sources, please give me a 1-2 sentence summary of each source as well as a(n) " + citation + " citation in proper format."
             query += "These sources must be in numbered format, with the title first, the link next, the summary after, and the citation last. "
             query += "Please separate each requested item for each source with a ~"
 
+            genai.configure(api_key="AIzaSyA8msIXhlRwOG2Zt6oti4ImDIDtZdNKSsU")
+            model = genai.GenerativeModel('gemini-pro')
 
+            response = model.generate_content(query)
+
+            for i in numSources:
+                result = Result.objects.create()
+                print()
 
             return HttpResponseRedirect(reverse('results'))
         else:
