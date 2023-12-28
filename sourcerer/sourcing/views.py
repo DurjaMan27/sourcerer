@@ -12,7 +12,7 @@ class NewSearchForm(forms.Form):
         ('Chicago', 'Chicago'),
     ]
     topicQuestion = forms.CharField(label="Topic", widget=forms.TextInput(attrs={'placeholder': 'Research Question'}), required=True)
-    startingBid = forms.IntegerField(label="Number of Sources", required=False)
+    numSources = forms.IntegerField(label="Number of Sources", required=False)
     citationFormat = forms.ChoiceField(label="Citation Format", choices=CATEGORY_CHOICES, required=True)
 
 def homepage(request):
