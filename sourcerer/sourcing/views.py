@@ -7,6 +7,7 @@ from datetime import date
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
+from django.utils import timezone
 
 # Create your views here.
 
@@ -80,7 +81,7 @@ def homepage(request):
             numSources = form.cleaned_data["numSources"]
             citation = form.cleaned_data["citationFormat"]
 
-            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citation=citation, searchDate=date.today(), results=None)
+            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citation=citation, searchDate=timezone.now(), results=None)
 
             query = "My research topic/question is '" + question + "'. Given this question, please give me " + numSources + " sources that will help me conduct research on the topic. "
             query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
