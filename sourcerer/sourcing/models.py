@@ -11,6 +11,7 @@ class Result(models.Model):
     citation = models.TextField()
 class Search(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    searchID = models.AutoField(primary_key=True)
     topic = models.TextField(max_length=255)
     numSources = models.IntegerField()
     citationFormat = models.CharField(max_length=3)
