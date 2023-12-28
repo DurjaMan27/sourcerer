@@ -5,7 +5,7 @@ class User(models.Model):
     pass
 
 class Result(models.Model):
-    sourceCompany = models.TextField()
+    title = models.TextField()
     sourceURL = models.URLField()
     summary = models.TextField()
     citation = models.TextField()
