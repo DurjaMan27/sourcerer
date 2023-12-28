@@ -90,6 +90,7 @@ def homepage(request):
             query += "These sources must be in numbered format, with the content title first, the link next, the summary after, and the citation last. "
             query += "Please make sure that each item for a source has its name before it. For example, before returning the title, please add 'Title:'."
             query += "Do the same for all other pieces of content that I asked for and make sure that each one is bolded."
+            query += "Make sure that the pieces of content being returned are labeled 'Title', 'Link', 'Summary', and 'Citation'. No other labels are allowed."
 
             genai.configure(api_key="")
             model = genai.GenerativeModel('gemini-pro')
@@ -98,7 +99,6 @@ def homepage(request):
             print(response.text)
             #response = response.text.split(" ")
             response = response.text
-            print(response[0:10])
 
             for i in range(1, numSources+1):
                 if i < numSources:
@@ -108,10 +108,10 @@ def homepage(request):
 
                 print(miniresponse)
 
-                title = miniresponse[miniresponse.find("**Title:**")+9:miniresponse.find("**URL:**")]
-                url = miniresponse[miniresponse.find("**URL:**")+7:miniresponse.find("**Summary:**")]
-                summary = miniresponse[miniresponse.find("**Summary:**")+11:miniresponse.find("**Citation:**")]
-                citation = miniresponse[miniresponse.find("**Citation**")+12]
+                title = miniresponse[miniresponse.find("**Title:**") : miniresponse.find("**Link:**")]
+                url = miniresponse[miniresponse.find("**Link:**") : miniresponse.find("**Summary:**")]
+                summary = miniresponse[miniresponse.find("**Summary:**") : miniresponse.find("**Citation:**")]
+                citation = miniresponse[miniresponse.find("**Citation**")]
 
                 result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
                 search.results.add(result)
