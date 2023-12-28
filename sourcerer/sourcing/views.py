@@ -32,16 +32,24 @@ def homepage(request):
             query = "My research topic/question is '" + question + "'. Given this question, please give me " + numSources + " sources that will help me conduct research on the topic. "
             query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
             query += "Along with the URLs to these sources, please give me a 1-2 sentence summary of each source as well as a(n) " + citation + " citation in proper format."
-            query += "These sources must be in numbered format, with the title first, the link next, the summary after, and the citation last. "
+            query += "These sources must be in numbered format, with the content title first, the link next, the summary after, and the citation last. "
             query += "Please separate each requested item for each source with a ~"
 
-            genai.configure(api_key="AIzaSyA8msIXhlRwOG2Zt6oti4ImDIDtZdNKSsU")
+            genai.configure(api_key="")
             model = genai.GenerativeModel('gemini-pro')
 
-            response = model.generate_content(query)
+            response = list(model.generate_content(query))
 
-            for i in numSources:
-                result = Result.objects.create()
+            for i in range(1, numSources+1):
+                response = response[response.index(f"{i}.")]
+
+                title, response = response[0:response.index("~")]
+                url, response = response[1:response.index("~")]
+                summary, response = response[1:response.index("~")]
+                citation, response = response[1:response.index("~")]
+
+                result = Result.objects.create(title=title, sourceURL=url, summary=summary, citation=citation)
+
                 print()
 
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
