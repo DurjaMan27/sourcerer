@@ -96,15 +96,18 @@ def homepage(request):
             response = model.generate_content(query)
             print(response.text)
             response = response.text.split(" ")
-            print(response[0])
+            print(response[0:10])
 
             for i in range(1, numSources+1):
-                response = response[response.index(f"{i}.")]
+                if i < numSources:
+                    miniresponse = response[response.index(f"{i}."):response.index(f"{i+1}.")]
+                else:
+                    miniresponse = response[response.index(f"{i}."):]
 
-                title, response = response[response.index("**Title:**")+9:response.index("**URL:**")]
-                url, response = response[response.index("**URL:**")+7:response.index("**Summary:**")]
-                summary, response = response[response.index("**Summary:**")+11:response.index("**Citation:**")]
-                citation, response = response[response.index("**Citation**")+12]
+                title = miniresponse[miniresponse.index("**Title:**")+9:miniresponse.index("**URL:**")]
+                url = miniresponse[miniresponse.index("**URL:**")+7:miniresponse.index("**Summary:**")]
+                summary = miniresponse[miniresponse.index("**Summary:**")+11:miniresponse.index("**Citation:**")]
+                citation = miniresponse[miniresponse.index("**Citation**")+12]
 
                 result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
                 search.results.add(result)
