@@ -100,25 +100,13 @@ def homepage(request):
             response = response.text
             print(response[0:10])
 
-            '''for i in range(1, numSources+1):
-                if i < numSources:
-                    miniresponse = response[response.index(f"{i}."):response.index(f"{i+1}.")]
-                else:
-                    miniresponse = response[response.index(f"{i}."):]
-
-                title = miniresponse[miniresponse.index("**Title:**")+9:miniresponse.index("**URL:**")]
-                url = miniresponse[miniresponse.index("**URL:**")+7:miniresponse.index("**Summary:**")]
-                summary = miniresponse[miniresponse.index("**Summary:**")+11:miniresponse.index("**Citation:**")]
-                citation = miniresponse[miniresponse.index("**Citation**")+12]
-
-                result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
-                search.results.add(result)'''
-
             for i in range(1, numSources+1):
                 if i < numSources:
                     miniresponse = response[response.find(f"{i}."):response.find(f"{i+1}.")]
                 else:
                     miniresponse = response[response.find(f"{i}."):]
+
+                print(miniresponse)
 
                 title = miniresponse[miniresponse.find("**Title:**")+9:miniresponse.find("**URL:**")]
                 url = miniresponse[miniresponse.find("**URL:**")+7:miniresponse.find("**Summary:**")]
