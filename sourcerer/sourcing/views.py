@@ -4,6 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django import forms
 from .models import User, Search, Result
 from datetime import date
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
 
 # Create your views here.
@@ -18,14 +20,66 @@ class NewSearchForm(forms.Form):
     numSources = forms.IntegerField(label="Number of Sources", required=False)
     citationFormat = forms.ChoiceField(label="Citation Format", choices=CATEGORY_CHOICES, required=True)
 
+
+def login_view(request):
+    if request.method == "POST":
+
+        # Attempt to sign user in
+        username = request.POST["username"]
+        password = request.POST["password"]
+        user = authenticate(request, username=username, password=password)
+
+        # Check if authentication successful
+        if user is not None:
+            login(request, user)
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "auctions/login.html", {
+                "message": "Invalid username and/or password."
+            })
+    else:
+        return render(request, "auctions/login.html")
+
+@login_required
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse("homepage"))
+
+
+def register(request):
+    if request.method == "POST":
+        username = request.POST["username"]
+        email = request.POST["email"]
+
+        # Ensure password matches confirmation
+        password = request.POST["password"]
+        confirmation = request.POST["confirmation"]
+        if password != confirmation:
+            return render(request, "auctions/register.html", {
+                "message": "Passwords must match."
+            })
+
+        # Attempt to create new user
+        try:
+            user = User.objects.create_user(username, email, password)
+            user.save()
+        except IntegrityError:
+            return render(request, "auctions/register.html", {
+                "message": "Username already taken."
+            })
+        login(request, user)
+        return HttpResponseRedirect(reverse("homepage"))
+    else:
+        return render(request, "auctions/register.html")
+
 def homepage(request):
     if request.method == 'POST':
         form = NewSearchForm(request.POST)
         if form.is_valid():
 
-            question = form.topicQuestion
-            numSources = form.numSources
-            citation = form.citationFormat
+            question = form.cleaned_data["topicQuestion"]
+            numSources = form.cleaned_data["numSources"]
+            citation = form.cleaned_data["citationFormat"]
 
             search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citation=citation, searchDate=date.today(), results=None)
 
