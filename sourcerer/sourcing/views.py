@@ -8,8 +8,6 @@ from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
-from google.ai import generativelanguage as glm
-from django.utils import timezone
 
 # Create your views here.
 
