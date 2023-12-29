@@ -8,7 +8,7 @@ from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
-import config
+from . import config
 
 # Create your views here.
 
