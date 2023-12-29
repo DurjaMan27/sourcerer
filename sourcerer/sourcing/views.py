@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
+import config
 
 # Create your views here.
 
@@ -91,7 +92,7 @@ def homepage(request):
             query += "Do the same for all other pieces of content that I asked for and make sure that each one is bolded."
             query += "Make sure that the pieces of content being returned are labeled 'Title', 'Link', 'Summary', and 'Citation'. No other labels are allowed."
 
-            genai.configure(api_key="")
+            genai.configure(api_key=config.api_key)
             defaults = {
                 'model': 'models/text-bison-001',
                 'temperature': 0.7,
