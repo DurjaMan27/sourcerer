@@ -9,6 +9,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 import google.generativeai as genai
 from . import config
+import pyperclip
 
 # Create your views here.
 
@@ -141,5 +142,22 @@ def results(request, searchID):
     results = search.results.all()
     return render(request, "sourcing/results.html", {
         "search": search,
-        "results": results
+        "results": results,
+        "copy": False
+    })
+
+def citations(request, searchID):
+    search = Search.objects.get(pk=searchID)
+    results = search.results.all()
+
+    citationString = ""
+    for result in results:
+        citationString += result.citation + "\n"
+
+    pyperclip.copy(citationString)
+
+    return render(request, "sourcing/results.html", {
+        "search": search,
+        "results": results,
+        "copy": True
     })
