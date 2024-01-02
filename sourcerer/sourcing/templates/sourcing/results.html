@@ -21,4 +21,9 @@
     </ol>
 
     <a href="{% url 'homepage' %}"><button>Return to Homepage</button></a>
+    {% if copy %}
+        <a href="{% url 'citations' search.searchID %}" style="background:#3630a3;color:white;" onclick="alert('Action cancelled.')"><button>Copy Source Citations</button></a>
+    {% else %}
+        <a href="{% url 'citations' search.searchID %}"><button>Copy Source Citations</button></a>
+    {% endif %}
 {% endblock %}
