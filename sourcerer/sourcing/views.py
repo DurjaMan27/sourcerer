@@ -161,3 +161,6 @@ def citations(request, searchID):
         "results": results,
         "copy": True
     })
+
+def previousSearches(request, username):
+    return HttpResponseRedirect(reverse(""))
