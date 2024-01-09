@@ -1,6 +1,6 @@
 body {
     margin: 0;
-    background-color: #a3ad7d;
+    background-color: #e5ead3;
     padding: 10px;
 }
 
@@ -23,8 +23,8 @@ textarea {
 }
 
 #title {
-    text-align: center;
-    color: green;
+    text-align: left;
+    color: blue;
 }
 
 .nav {
@@ -40,10 +40,4 @@ textarea {
 .nav-item {
     display: inline-block; /* Display items inline */
     margin-right: 10px;
-}
-
-/* Update the styles for sign-in status */
-#username_status {
-    display: inline-block;
-    margin-right: auto; /* Push the sign-in status to the left */
 }
