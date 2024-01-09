@@ -1,7 +1,7 @@
 {% extends "sourcing/layout.html" %}
 
 {% block body %}
-    <h2>This is the homepage. Below is the form. You can't do anything with it yet.</h2>
+    <h2>Search for your topic here!</h2>
     <form action="{% url 'homepage' %}" method="post">
         {% csrf_token %}
         {{ form }}
