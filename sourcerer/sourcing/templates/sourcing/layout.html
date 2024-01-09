@@ -3,28 +3,27 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <img src=""><title>Sourcerer</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>Sourcerer</title>
         <link href="{% static 'sourcing/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <div name="sign-in-status">
-            {% if user.is_authenticated %}
-                Signed in as <strong>{{ user.username }}</strong>.
-                <a href="{% url 'logout' %}"><button>Log Out</button></a>
-            {% else %}
-                Not signed in.
-                <a href="{% url 'login' %}"><button>Log In</button></a>
-                <a href="{% url 'register' %}"><button>Register</button></a>
-            {% endif %}
-        </div>
         <ul class="nav">
+            <div>
+                <h1 id="title">Sourcerer</h1>
+            </div>
+            <div name="sign-in-status">
+                {% if user.is_authenticated %}
+                    <p id="username_status">Signed in as <strong>{{ user.username }}</strong>.</p>
+                {% else %}
+                    Not signed in.
+                {% endif %}
+            </div>
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'previousSearches' %}">Your Previous Searches</a>
+                    <a class="nav-link" href="{% url 'previousSearches' user %}">Your Previous Searches</a>
                 </li>
             {% else %}
                 <li class="nav-item">
