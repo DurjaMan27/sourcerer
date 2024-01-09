@@ -19,25 +19,53 @@ textarea {
 }
 
 .main {
-    padding: 10px;
+    margin-left:160px;
+    padding: 0px 10px;
 }
 
 #title {
     text-align: left;
     color: blue;
+    padding-left: 15px;
 }
 
 .nav {
     background-color: #f0f0f0;
     height: 10vh;
-    width: 95%;
+    width: 97%;
     padding: 10px;
-    text-align: left;
+    text-align: right;
     border: 5px solid black;
 }
 
 /* Update the styles for navigation items */
 .nav-item {
-    display: inline-block; /* Display items inline */
+    display: block; /* Display items inline */
+    text-align: center;
     margin-right: 10px;
+}
+
+.sidenav {
+    width: 500px;
+    position: fixed;
+    z-index: 1;
+    top: 20%;
+    right: 25px;
+    bottom: 5%;
+    background-color: #ffffff;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.sidenav a {
+    padding:6px 8px 6px 16px;
+    text-decoration: none;
+    font-size:25px;
+    color: #818181;
+    display:block;
+    text-align: center;
+}
+
+.sidenav a:hover{
+    color:#f1f1f1;
 }

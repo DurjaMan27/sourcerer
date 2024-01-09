@@ -11,31 +11,38 @@
             <div>
                 <h1 id="title">Sourcerer</h1>
             </div>
-            <div name="sign-in-status">
+            <div class="nav-item" name="sign-in-status">
                 {% if user.is_authenticated %}
                     <p id="username_status">Signed in as <strong>{{ user.username }}</strong>.</p>
                 {% else %}
                     Not signed in.
                 {% endif %}
             </div>
-            {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'previousSearches' user %}">Your Previous Searches</a>
-                </li>
-            {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'register' %}">Register</a>
-                </li>
-            {% endif %}
+            <div>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'previousSearches' user %}">Your Previous Searches</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+            <div>
         </ul>
         <div name="page-content">
             {% block body %}
+            {% endblock %}
+        </div>
+        <div class="sidenav">
+            <a>Previous Searches</a>
+            {% block sidebar %}
             {% endblock %}
         </div>
     </body>
