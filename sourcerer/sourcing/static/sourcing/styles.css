@@ -1,6 +1,7 @@
 body {
     margin: 0;
-    background-color: white;
+    background-color: #a3ad7d;
+    padding: 10px;
 }
 
 code {
@@ -21,18 +22,28 @@ textarea {
     padding: 10px;
 }
 
-.search {
-    width: 100%;
-    font-size: 15px;
-    line-height: 15px;
+#title {
+    text-align: center;
+    color: green;
 }
 
-.sidebar {
+.nav {
     background-color: #f0f0f0;
-    height: 100vh;
-    padding: 20px;
+    height: 10vh;
+    width: 95%;
+    padding: 10px;
+    text-align: left;
+    border: 5px solid black;
 }
 
-.sidebar h2 {
-    margin-top: 5px;
+/* Update the styles for navigation items */
+.nav-item {
+    display: inline-block; /* Display items inline */
+    margin-right: 10px;
+}
+
+/* Update the styles for sign-in status */
+#username_status {
+    display: inline-block;
+    margin-right: auto; /* Push the sign-in status to the left */
 }
