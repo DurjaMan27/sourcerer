@@ -44,7 +44,6 @@ textarea {
 }
 
 .title {
-    display: inline-grid;
     text-align: left;
     color: blue;
     padding-left: 15px;
@@ -55,7 +54,7 @@ textarea {
     height: 10vh;
     width: 97%;
     padding: 10px;
-    text-align: right;
+    text-align: left;
     border: 5px solid black;
 }
 
