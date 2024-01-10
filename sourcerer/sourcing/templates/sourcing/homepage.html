@@ -11,8 +11,8 @@
 
 {% block sidebar %}
     {% if user.is_authenticated %}
-        <strong style="text-align: center; padding-top: 15px;">This section is still under construction.</strong>
+        <a style="text-align: center; padding-top: 15px;">This section is still under construction.</a>
     {% else %}
-        <strong style="text-align: center; padding-top: 15px;">Sign-in to see previous search results.</strong>
+        <a style="text-align: center; padding-top: 15px;">Sign-in to see previous search results.</a>
     {% endif %}
 {% endblock %}
