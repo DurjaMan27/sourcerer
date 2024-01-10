@@ -23,14 +23,11 @@ textarea {
     padding: 0px 10px;
 }
 
-#title {
+.title {
+    display: inline-grid;
     text-align: left;
     color: blue;
     padding-left: 15px;
-}
-
-.title {
-    display: inline-block;
 }
 
 .nav {
