@@ -28,11 +28,6 @@ code {
     white-space: pre;
 }
 
-h1 {
-    margin-top: 0px;
-    padding-top: 20px;
-}
-
 textarea {
     height: 90vh;
     width: 80%;
@@ -44,9 +39,14 @@ textarea {
 }
 
 .title {
+    position: relative;
     text-align: left;
     color: blue;
     padding-left: 15px;
+}
+
+.title img {
+    float: left;
 }
 
 .nav {
@@ -56,11 +56,12 @@ textarea {
     padding: 10px;
     text-align: left;
     border: 5px solid black;
+    float: right;
 }
 
 /* Update the styles for navigation items */
 .nav-item {
-    display: block; /* Display items inline */
+    position: relative; /* Display items inline */
     text-align: center;
     margin-right: 10px;
 }
