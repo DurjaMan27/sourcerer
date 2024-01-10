@@ -140,11 +140,18 @@ def homepage(request):
 def results(request, searchID):
     search = Search.objects.get(pk=searchID)
     results = search.results.all()
-    return render(request, "sourcing/results.html", {
-        "search": search,
-        "results": results,
-        "copy": False
-    })
+    if request.user.is_authenticated:
+        return render(request, "sourcing/results.html", {
+            "search": search,
+            "results": results,
+            "copy": False
+        })
+    else:
+        return render(request, "sourcing/results.html", {
+            "search": search,
+            "results": results,
+            "copy": False
+        })
 
 def citations(request, searchID):
     search = Search.objects.get(pk=searchID)
