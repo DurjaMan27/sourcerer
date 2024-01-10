@@ -19,9 +19,9 @@ class NewSearchForm(forms.Form):
         ('APA', 'APA'),
         ('Chicago', 'Chicago'),
     ]
-    topicQuestion = forms.CharField(label="Topic", widget=forms.TextInput(attrs={'placeholder': 'Research Question', 'style': 'width: 600px; display: block;'}), required=True)
-    numSources = forms.IntegerField(label="Number of Sources", required=False, widget=forms.TextInput(attrs={'style': 'width: 100px; display: block;'}))
-    citationFormat = forms.ChoiceField(label="Citation Format", choices=CATEGORY_CHOICES, required=True, widget=forms.TextInput(attrs={'style':'display:block;'}))
+    topicQuestion = forms.CharField(label="Topic", widget=forms.TextInput(attrs={'placeholder': 'Research Question', 'style': 'width: 600px; display: block; align: center; margin: 20px;'}), required=True)
+    numSources = forms.IntegerField(label="Number of Sources", required=False, widget=forms.TextInput(attrs={'style': 'width: 100px; display: block; align: center; margin: 20px;'}))
+    citationFormat = forms.ChoiceField(label="Citation Format", choices=CATEGORY_CHOICES, required=True, widget=forms.TextInput(attrs={'style':'display: block; align: center; margin: 20px;'}))
 
 
 def login_view(request):
