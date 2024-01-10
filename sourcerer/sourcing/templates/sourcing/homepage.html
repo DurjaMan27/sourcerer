@@ -8,3 +8,11 @@
         <input type="submit" value="Generate Sources">
     </form>
 {% endblock %}
+
+{% block sidebar %}
+    {% if user.is_authenticated %}
+        
+    {% else %}
+        <strong>Sign-in to see previous search results.</strong>
+    {% endif %}
+{% endblock %}
