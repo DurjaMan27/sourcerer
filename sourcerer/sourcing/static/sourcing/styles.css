@@ -4,6 +4,26 @@ body {
     padding: 10px;
 }
 
+input[type="submit"] {
+    background-color: blue;
+    color: white;
+    position: center;
+    width: 25%;
+    height: 45px;
+    cursor: pointer;
+    position: relative;
+    align-self: center;
+    border: 2px solid black;
+}
+
+.page-content {
+    margin: 15px;
+    background-color: #e5ead3;
+    padding: 5px;
+    width: 60%;
+    align-items: center;
+}
+
 code {
     white-space: pre;
 }
@@ -47,7 +67,7 @@ textarea {
 }
 
 .sidenav {
-    width: 500px;
+    width: 30%;
     position: fixed;
     z-index: 1;
     top: 20%;
@@ -62,7 +82,7 @@ textarea {
 .sidenav a {
     padding: 6px 8px 6px 16px;
     text-decoration: none;
-    font-size: 25px;
+    font-size: 50px;
     color: #818181;
     display: block;
     text-align: center;
