@@ -111,7 +111,10 @@ def homepage(request):
             for i in range(numSources):
                 j = 0
                 while j != i:
-                    miniresponse = response[response.find("Title:")+1:]
+                    if j == 0:
+                        miniresponse = response[response.find("Title:")+1:]
+                    else:
+                        miniresponse = miniresponse[miniresponse.find("Title:")+1:]
                     j += 1
 
                 miniresponse = miniresponse[miniresponse.find("Title:"):]
@@ -119,7 +122,10 @@ def homepage(request):
                 title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
                 url = miniresponse[miniresponse.find("Link:")+5 : miniresponse.find("Summary:")]
                 summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
-                citation = miniresponse[miniresponse.find("Citation:") : miniresponse[1:].find("Title:")]
+                if i == numSources - 1:
+                    citation = miniresponse[miniresponse.find("Citation:"):len(miniresponse)-1]
+                else:
+                    citation = miniresponse[miniresponse.find("Citation:") : miniresponse[1:].find("Title:")-6]
 
                 title = title.replace("*", "")
                 url = url.replace("*", "")
