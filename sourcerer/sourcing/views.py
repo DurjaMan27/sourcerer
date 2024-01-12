@@ -137,21 +137,92 @@ def homepage(request):
             'form': NewSearchForm
         })
 
+@login_required
+def homepageAuthenticated(request, username):
+    if request.method == 'POST':
+        form = NewSearchForm(request.POST)
+        if form.is_valid():
+
+            question = form.cleaned_data["topicQuestion"]
+            numSources = form.cleaned_data["numSources"]
+            citation = form.cleaned_data["citationFormat"]
+
+            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
+
+            query = "My research topic/question is '" + question + "'. Given this question, please give me " + str(numSources) + " sources that will help me conduct research on the topic. "
+            query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
+            query += "Along with the URLs to these sources, please give me a 1-2 sentence summary of each source as well as a(n) " + citation + " citation in proper format."
+            query += "These sources must be in numbered format, with the content title first, the link next, the summary after, and the citation last. "
+            query += "Please make sure that each item for a source has its name before it. For example, before returning the title, please add 'Title:'."
+            query += "Do the same for all other pieces of content that I asked for and make sure that each one is bolded."
+            query += "Make sure that the pieces of content being returned are labeled 'Title', 'Link', 'Summary', and 'Citation'. No other labels are allowed."
+
+            genai.configure(api_key=config.api_key)
+            defaults = {
+                'model': 'models/text-bison-001',
+                'temperature': 0.7,
+                'candidate_count': 1,
+            }
+
+            response = genai.generate_text(
+                **defaults,
+                prompt = query
+            )
+            response = response.result
+
+            for i in range(1, numSources+1):
+                if i < numSources:
+                    miniresponse = response[response.find(f"{i}."):response.find(f"{i+1}.")]
+                else:
+                    miniresponse = response[response.find(f"{i}."):]
+
+                print(miniresponse)
+
+                title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
+                url = miniresponse[miniresponse.find("Link:") : miniresponse.find("Summary:")]
+                summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
+                citation = miniresponse[miniresponse.find("Citation:"):len(miniresponse)]
+
+                title = title.replace("*", "")
+                url = url.replace("*", "")
+                summary = summary.replace("*", "")
+                citation = citation.replace("*", "")
+
+                result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
+                search.results.add(result)
+
+            return HttpResponseRedirect(reverse('results-authenticated', kwargs={'searchID': search.searchID, 'username': username}))
+        else:
+            return render(request, "sourcing/homepage.html", {
+                'form': NewSearchForm,
+                'username': username
+            })
+    else:
+        return render(request, "sourcing/homepage.html", {
+            'form': NewSearchForm,
+            'username': username
+        })
+
 def results(request, searchID):
     search = Search.objects.get(pk=searchID)
     results = search.results.all()
-    if request.user.is_authenticated:
-        return render(request, "sourcing/results.html", {
-            "search": search,
-            "results": results,
-            "copy": False
-        })
-    else:
-        return render(request, "sourcing/results.html", {
-            "search": search,
-            "results": results,
-            "copy": False
-        })
+    return render(request, "sourcing/results.html", {
+        "search": search,
+        "results": results,
+        "copy": False
+    })
+
+@login_required
+def resultsAuthenticated(request, searchID, username):
+    search = Search.objects.get(pk=searchID)
+    results = search.results.all()
+    user = request.user
+    recent_searches = user.related_objects.all().order_by('-Search__searchDate')[:3]
+    return render(request, "sourcing/results.html", {
+        "search": search,
+        "results": results,
+        "copy": False
+    })
 
 def citations(request, searchID):
     search = Search.objects.get(pk=searchID)
@@ -162,12 +233,12 @@ def citations(request, searchID):
         citationString += result.citation + "\n"
 
     pyperclip.copy(citationString)
-
-    return render(request, "sourcing/results.html", {
-        "search": search,
-        "results": results,
-        "copy": True
-    })
+    if request.user.is_authenticated:
+        return render(request, "sourcing/results.html", {
+            "search": search,
+            "results": results,
+            "copy": True
+        })
 
 def previousSearches(request, username):
     return HttpResponseRedirect(reverse(""))
