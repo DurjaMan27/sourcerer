@@ -4,6 +4,7 @@ from datetime import date, datetime
 
 # Create your models here.
 class User(AbstractUser):
+    recentSearches = models.ManyToManyField('Search', on_delete=models.CASCADE)
     pass
 class Result(models.Model):
     sourceCompany = models.TextField()
@@ -18,3 +19,4 @@ class Search(models.Model):
     citationFormat = models.CharField(max_length=3)
     searchDate = models.TextField()
     results = models.ManyToManyField(Result)
+
