@@ -1,11 +1,14 @@
 {% extends "sourcing/layout.html" %}
 
 {% block body %}
-    <h1>This is the results page.</h1>
+    <a href="{% url 'homepage' %}"><button>Return to Homepage</button></a>
+    {% if copy %}
+        <a href="{% url 'citations' search.searchID %}" style="background:#3630a3;color:white;" onclick="alert('Sources copied to clipboard.')"><button>Copy Source Citations</button></a>
+    {% else %}
+        <a href="{% url 'citations' search.searchID %}"><button>Copy Source Citations</button></a>
+    {% endif %}
 
-    <h2>You asked the research question of "{{ search.topic }}"</h2>
-    <h4>{{ search.citation }} format</h4>
-
+    <h1>You asked the research question "{{ search.topic }}"</h1>
     <h2>Here are the {{ search.numSources }} results below:</h2>
     <ol>
         {% for result in results %}
@@ -19,11 +22,4 @@
         </li>
         {% endfor %}
     </ol>
-
-    <a href="{% url 'homepage' %}"><button>Return to Homepage</button></a>
-    {% if copy %}
-        <a href="{% url 'citations' search.searchID %}" style="background:#3630a3;color:white;" onclick="alert('Sources copied to clipboard.')"><button>Copy Source Citations</button></a>
-    {% else %}
-        <a href="{% url 'citations' search.searchID %}"><button>Copy Source Citations</button></a>
-    {% endif %}
 {% endblock %}

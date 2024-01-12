@@ -18,13 +18,15 @@ input[type="submit"] {
 
 .page-content {
     position: fixed;
-    top: 15%;
-    margin: 15px;
     background-color: #e5ead3;
+    margin: 15px;
+    margin-top: 8%;
     padding: 5px;
     padding-top: 15px;
-    width: 60%;
+    width: 62.5%;
+    height: 80%;
     align-items: center;
+    overflow-y: scroll;
 }
 
 code {
@@ -63,6 +65,7 @@ textarea {
     text-align: left;
     border: 5px solid black;
     float: right;
+    position: fixed;
 }
 
 .nav-item {
