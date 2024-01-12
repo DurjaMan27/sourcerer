@@ -34,7 +34,7 @@ textarea {
 }
 
 .main {
-    margin-left:160px;
+    margin-left: 160px;
     padding: 0px 10px;
 }
 
@@ -43,10 +43,14 @@ textarea {
     text-align: left;
     color: blue;
     padding-left: 15px;
+    font-size: 20px;
+    top: 3%;
 }
 
 .title img {
     float: left;
+    position: relative;
+    padding-right: 10px;
 }
 
 .nav {
@@ -59,11 +63,26 @@ textarea {
     float: right;
 }
 
-/* Update the styles for navigation items */
 .nav-item {
+    position: fixed; /* Display items inline */
+    text-align: center;
+    float: right;
+    right: 5%;
+    top: 5%;
+}
+
+#sign-in-status {
+    text-align: right;
+    right: 5%;
+    top: 15.5%;
+}
+
+/* Update the styles for navigation items */
+.nav-link {
     position: relative; /* Display items inline */
     text-align: center;
-    margin-right: 10px;
+    float: right;
+    font-size: 20px;
 }
 
 .sidenav {
