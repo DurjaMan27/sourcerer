@@ -7,36 +7,34 @@
         <link href="{% static 'sourcing/styles.css' %}" rel="stylesheet">
     </head>
     <body>
-        <ul class="nav">
+        <div class="nav">
             <div class="title">
-                <img src="{% static 'sourcing/magic-hat.jpg' %}" width="40" height="40">
+                <img src="{% static 'sourcing/magic-hat.jpg' %}" width="50" height="50">
                 <h1 id="title">Sourcerer</h1>
             </div>
-            <div class="nav-item" name="sign-in-status">
+            <div>
+                <div class="nav-item" id="sign-in-status">
+                    {% if user.is_authenticated %}
+                        <p id="username_status">Signed in as <strong>{{ user.username }}</strong>.</p>
+                    {% else %}
+                        <p>Not signed in.</p>
+                    {% endif %}
+                </div>
                 {% if user.is_authenticated %}
-                    <p id="username_status">Signed in as <strong>{{ user.username }}</strong>.</p>
+                    <div class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                        <p></p>
+                        <a class="nav-link" href="{% url 'previousSearches' user %}">Your Previous Searches</a>
+                    </div>
                 {% else %}
-                    Not signed in.
+                    <div class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                        <p></p>
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </div>
                 {% endif %}
             </div>
-            <div>
-                {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'previousSearches' user %}">Your Previous Searches</a>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'register' %}">Register</a>
-                    </li>
-                {% endif %}
-            <div>
-        </ul>
+        </div>
         <div class="page-content">
             {% block body %}
             {% endblock %}

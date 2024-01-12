@@ -17,9 +17,12 @@ input[type="submit"] {
 }
 
 .page-content {
+    position: fixed;
+    top: 15%;
     margin: 15px;
     background-color: #e5ead3;
     padding: 5px;
+    padding-top: 15px;
     width: 60%;
     align-items: center;
 }
@@ -44,7 +47,6 @@ textarea {
     color: blue;
     padding-left: 15px;
     font-size: 20px;
-    top: 3%;
 }
 
 .title img {
@@ -74,7 +76,7 @@ textarea {
 #sign-in-status {
     text-align: right;
     right: 5%;
-    top: 15.5%;
+    top: 14.5%;
 }
 
 /* Update the styles for navigation items */
