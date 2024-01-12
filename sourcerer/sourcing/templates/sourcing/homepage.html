@@ -11,7 +11,15 @@
 
 {% block sidebar %}
     {% if user.is_authenticated %}
-        <a style="text-align: center; padding-top: 15px; font-size: 25px; color: black;">This section is still under construction.</a>
+        {% for search in recentSearches %}
+            <a href="{% url 'results' search.searchID %}">
+                <div class="recentSearch">
+                    <h1>{{ search.topic }}</h1>
+                    <h3>{{ search.citationFormat }}</h3>
+                    <h4>{{ search.searchDate }}</h4>
+                </div>
+            </a>
+        {% endfor %}
     {% else %}
         <a style="text-align: center; padding-top: 15px; font-size: 25px; color: black;">Sign-in to see previous search results.</a>
     {% endif %}
