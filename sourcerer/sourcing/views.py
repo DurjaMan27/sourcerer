@@ -133,7 +133,7 @@ def homepage(request):
                 'form': NewSearchForm
             })
     else:
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             searches = request.user.recentSearches.all().order_by('-Search__searchDate')[:3]
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm,
