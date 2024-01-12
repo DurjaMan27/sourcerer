@@ -133,9 +133,16 @@ def homepage(request):
                 'form': NewSearchForm
             })
     else:
-        return render(request, "sourcing/homepage.html", {
-            'form': NewSearchForm
-        })
+        if request.user.is_authenticated():
+            searches = request.user.recentSearches.all().order_by('-Search__searchDate')[:3]
+            return render(request, "sourcing/homepage.html", {
+                'form': NewSearchForm,
+                'sidebarSearch': searches
+            })
+        else:
+            return render(request, "sourcing/homepage.html", {
+                'form': NewSearchForm
+            })
 
 @login_required
 def homepageAuthenticated(request, username):
