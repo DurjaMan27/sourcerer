@@ -109,23 +109,17 @@ def homepage(request):
             miniresponse = response
 
             for i in range(numSources):
-                print(miniresponse)
-                '''if i < numSources:
-                    miniresponse = response[response.find(f"{i}."):response.find(f"{i+1}.")]
-                else:
-                    miniresponse = response[response.find(f"{i}."):]
+                j = 0
+                while j != i:
+                    miniresponse = response[response.find("Title:")+1:]
+                    j += 1
+
+                miniresponse = miniresponse[miniresponse.find("Title:"):]
 
                 title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
                 url = miniresponse[miniresponse.find("Link:")+5 : miniresponse.find("Summary:")]
                 summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
-                citation = miniresponse[miniresponse.find("Citation:"):len(miniresponse)]'''
-
-                end = miniresponse[miniresponse.find("Title")+1:]
-
-                title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
-                url = miniresponse[miniresponse.find("Link:")+5 : miniresponse.find("Summary:")]
-                summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
-                citation = miniresponse[miniresponse.find("Citation:") : end.find("Title")]
+                citation = miniresponse[miniresponse.find("Citation:") : miniresponse[1:].find("Title:")]
 
                 title = title.replace("*", "")
                 url = url.replace("*", "")
@@ -134,8 +128,6 @@ def homepage(request):
 
                 result = Result.objects.create(sourceCompany=title, sourceURL=url, summary=summary, citation=citation)
                 search.results.add(result)
-
-                miniresponse = end[end.find("Title:")]
 
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
         else:
