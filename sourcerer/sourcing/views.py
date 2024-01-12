@@ -115,7 +115,7 @@ def homepage(request):
                 print(miniresponse)
 
                 title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
-                url = miniresponse[miniresponse.find("Link:") : miniresponse.find("Summary:")]
+                url = miniresponse[miniresponse.find("Link:")+5 : miniresponse.find("Summary:")]
                 summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
                 citation = miniresponse[miniresponse.find("Citation:"):len(miniresponse)]
 
