@@ -212,7 +212,7 @@ def savedSearches(request, username):
     searches = request.user.savedSearches.all().order_by('-searchDate')
     sidebar = searches[::-1][:5]
     return render(request, "sourcing/savedSearches.html", {
-        "savedSearches": searches,
+        "savedSearches": searches[::-1],
         "sidebarSearch": sidebar
     })
 
