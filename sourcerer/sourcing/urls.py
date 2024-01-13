@@ -8,5 +8,6 @@ urlpatterns = [
     path("logout", views.logout_view, name="logout"),
     path("register", views.register, name="register"),
     path("copyCitations/<int:searchID>", views.citations, name="citations"),
-    path("<str:username>/previousSearches", views.previousSearches, name="previousSearches")
+    path("<str:username>/savedSearches", views.savedSearches, name="savedSearches"),
+    path("saveSearch/<int:searchID>", views.saveSearch, name="saveSearch")
 ]

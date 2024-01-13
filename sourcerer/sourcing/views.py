@@ -143,6 +143,7 @@ def homepage(request):
     else:
         if request.user.is_authenticated:
             searches = request.user.recentSearches.all().order_by('-searchDate')[:3]
+            print(searches)
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm,
                 'sidebarSearch': searches
@@ -178,5 +179,11 @@ def citations(request, searchID):
             "copy": True
         })
 
-def previousSearches(request, username):
+@login_required
+def savedSearches(request, username):
     return HttpResponseRedirect(reverse(""))
+
+@login_required
+def saveSearch(request, searchID):
+    request.user.savedSearches.add(Search.objects.get(pk=searchID))
+    return HttpResponseRedirect(reverse('results', kwargs={'searchID': searchID}))
