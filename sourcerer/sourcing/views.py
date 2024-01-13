@@ -139,7 +139,7 @@ def homepage(request):
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
         else:
             if request.user.is_authenticated:
-                searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
+                searches = request.user.savedSearches.all().order_by('-searchDate')[::-1][:3]
                 return render(request, "sourcing/homepage.html", {
                     'form': NewSearchForm,
                     'sidebarSearch': searches,
@@ -153,7 +153,7 @@ def homepage(request):
 
     else:
         if request.user.is_authenticated:
-            searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
+            searches = request.user.savedSearches.all().order_by('-searchDate')[::-1][:3]
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm,
                 'sidebarSearch': searches,
@@ -170,7 +170,7 @@ def results(request, searchID):
     search = Search.objects.get(pk=searchID)
     results = search.results.all()
     if request.user.is_authenticated:
-        searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
+        searches = request.user.savedSearches.all().order_by('-searchDate')[::-1][:3]
         return render(request, "sourcing/results.html", {
             "search": search,
             "sidebarSearch": searches,
@@ -193,7 +193,7 @@ def citations(request, searchID):
     pyperclip.copy(citationString)
 
     if request.user.is_authenticated:
-        searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
+        searches = request.user.savedSearches.all().order_by('-searchDate')[::-1][:3]
         return render(request, "sourcing/results.html", {
             "search": search,
             "sidebarSearch": searches,
@@ -210,7 +210,7 @@ def citations(request, searchID):
 @login_required
 def savedSearches(request, username):
     searches = request.user.savedSearches.all().order_by('-searchDate')
-    sidebar = searches[-3:]
+    sidebar = searches[::-1][:3]
     return render(request, "sourcing/savedSearches.html", {
         "savedSearches": searches,
         "sidebarSearch": sidebar
