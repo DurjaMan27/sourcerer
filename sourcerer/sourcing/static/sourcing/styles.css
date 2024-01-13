@@ -120,6 +120,7 @@ textarea {
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
+    overflow-y: scroll;
 }
 
 .recentSearch:hover {
@@ -128,7 +129,7 @@ textarea {
 }
 
 .recentSearch h1 {
-    font-size: 50px;
+    font-size: 40px;
     color: black;
     text-align: left;
     margin-top: 5px;
@@ -142,8 +143,27 @@ textarea {
 }
 
 .recentSearch h4 {
-    font-size: 25px;
+    font-size: 20px;
     text-align: right;
     color: black;
+    margin-top: 5px;
+    align-items: flex-end;
+}
+
+.result {
+    display: grid;
+    height: 10%;
+    width: 75%;
+    outline: 5px black solid;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    overflow-y: scroll;
+}
+
+.recentSearch h1 {
+    font-size: 45px;
+    color: black;
+    text-align: left;
     margin-top: 5px;
 }
