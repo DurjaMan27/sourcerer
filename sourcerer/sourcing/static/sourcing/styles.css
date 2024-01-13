@@ -57,6 +57,20 @@ textarea {
     padding-right: 10px;
 }
 
+.google {
+    position: relative;
+    text-align: left;
+    color: green;
+    padding-right: 15px;
+    right: 5%;
+    top: 90%;
+}
+
+.google img {
+    float: right;
+    position: relative;
+}
+
 .nav {
     background-color: #f0f0f0;
     height: 10vh;
