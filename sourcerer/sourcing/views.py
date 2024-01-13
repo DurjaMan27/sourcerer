@@ -75,7 +75,7 @@ def register(request):
         return render(request, "sourcing/register.html")
 
 def homepage(request):
-    if request.method == 'POST':
+    if request.method == 'POST' and request.user.is_authenticated:
         form = NewSearchForm(request.POST)
         if form.is_valid():
 
@@ -83,10 +83,7 @@ def homepage(request):
             numSources = form.cleaned_data["numSources"]
             citation = form.cleaned_data["citationFormat"]
 
-            if request.user.is_authenticated:
-                search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
-            else:
-                search = Search.objects.create(topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
+            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
 
             query = "My research topic/question is '" + question + "'. Given this question, please give me " + str(numSources) + " sources that will help me conduct research on the topic. "
             query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
@@ -108,6 +105,7 @@ def homepage(request):
                 prompt = query
             )
             response = response.result
+            print(response)
 
             miniresponse = response
 
@@ -141,26 +139,30 @@ def homepage(request):
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
         else:
             if request.user.is_authenticated:
-                searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+                searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
                 return render(request, "sourcing/homepage.html", {
                     'form': NewSearchForm,
-                    'sidebarSearch': searches
+                    'sidebarSearch': searches,
+                    'message': ""
                 })
             else:
                 return render(request, "sourcing/homepage.html", {
-                    'form': NewSearchForm
+                    'form': NewSearchForm,
+                    'message': "(Sign-in or register to make a search)"
                 })
 
     else:
         if request.user.is_authenticated:
-            searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+            searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm,
-                'sidebarSearch': searches
+                'sidebarSearch': searches,
+                'message': ""
             })
         else:
             return render(request, "sourcing/homepage.html", {
-                'form': NewSearchForm
+                'form': NewSearchForm,
+                'message': "(Sign-in or register to make a search)"
             })
 
 
@@ -168,7 +170,7 @@ def results(request, searchID):
     search = Search.objects.get(pk=searchID)
     results = search.results.all()
     if request.user.is_authenticated:
-        searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+        searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
         return render(request, "sourcing/results.html", {
             "search": search,
             "sidebarSearch": searches,
@@ -191,7 +193,7 @@ def citations(request, searchID):
     pyperclip.copy(citationString)
 
     if request.user.is_authenticated:
-        searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+        searches = request.user.savedSearches.all().order_by('-searchDate')[-3:]
         return render(request, "sourcing/results.html", {
             "search": search,
             "sidebarSearch": searches,
@@ -208,7 +210,7 @@ def citations(request, searchID):
 @login_required
 def savedSearches(request, username):
     searches = request.user.savedSearches.all().order_by('-searchDate')
-    sidebar = searches[:3]
+    sidebar = searches[-3:]
     return render(request, "sourcing/savedSearches.html", {
         "savedSearches": searches,
         "sidebarSearch": sidebar
