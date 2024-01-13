@@ -137,13 +137,20 @@ def homepage(request):
 
             return HttpResponseRedirect(reverse('results', kwargs={'searchID': search.searchID}))
         else:
-            return render(request, "sourcing/homepage.html", {
-                'form': NewSearchForm
-            })
+            if request.user.is_authenticated:
+                searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+                return render(request, "sourcing/homepage.html", {
+                    'form': NewSearchForm,
+                    'sidebarSearch': searches
+                })
+            else:
+                return render(request, "sourcing/homepage.html", {
+                    'form': NewSearchForm
+                })
+
     else:
         if request.user.is_authenticated:
-            searches = request.user.recentSearches.all().order_by('-searchDate')[:3]
-            print(searches)
+            searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm,
                 'sidebarSearch': searches
@@ -157,22 +164,38 @@ def homepage(request):
 def results(request, searchID):
     search = Search.objects.get(pk=searchID)
     results = search.results.all()
-    return render(request, "sourcing/results.html", {
-        "search": search,
-        "results": results,
-        "copy": False
-    })
+    if request.user.is_authenticated:
+        searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+        return render(request, "sourcing/homepage.html", {
+            "search": search,
+            "sidebarSearch": searches,
+            "results": results,
+            "copy": False
+        })
+    else:
+        return render(request, "sourcing/results.html", {
+            "search": search,
+            "results": results,
+            "copy": False
+        })
 
 def citations(request, searchID):
     search = Search.objects.get(pk=searchID)
     results = search.results.all()
-
     citationString = ""
     for result in results:
         citationString += result.citation + "\n"
-
     pyperclip.copy(citationString)
+
     if request.user.is_authenticated:
+        searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
+        return render(request, "sourcing/results.html", {
+            "search": search,
+            "sidebarSearch": searches,
+            "results": results,
+            "copy": True
+        })
+    else:
         return render(request, "sourcing/results.html", {
             "search": search,
             "results": results,
@@ -181,7 +204,10 @@ def citations(request, searchID):
 
 @login_required
 def savedSearches(request, username):
-    return HttpResponseRedirect(reverse(""))
+    searches = request.user.savedSearches.all().order_by('-searchDate')
+    return render(request, "sourcing/savedSearches.html", {
+        "savedSearches": searches
+    })
 
 @login_required
 def saveSearch(request, searchID):
