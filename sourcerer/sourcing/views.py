@@ -120,7 +120,7 @@ def homepage(request):
 
                 miniresponse = miniresponse[miniresponse.find("Title:"):]
 
-                title = miniresponse[miniresponse.find("Title:") : miniresponse.find("Link:")]
+                title = miniresponse[miniresponse.find("Title:")+6 : miniresponse.find("Link:")]
                 url = miniresponse[miniresponse.find("Link:")+5 : miniresponse.find("Summary:")]
                 summary = miniresponse[miniresponse.find("Summary:") : miniresponse.find("Citation:")]
                 if i == numSources - 1:
