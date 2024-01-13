@@ -205,8 +205,10 @@ def citations(request, searchID):
 @login_required
 def savedSearches(request, username):
     searches = request.user.savedSearches.all().order_by('-searchDate')
+    sidebar = searches[:3]
     return render(request, "sourcing/savedSearches.html", {
-        "savedSearches": searches
+        "savedSearches": searches,
+        "sidebarSearch": sidebar
     })
 
 @login_required
