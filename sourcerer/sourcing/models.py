@@ -4,7 +4,7 @@ from datetime import date, datetime
 
 # Create your models here.
 class User(AbstractUser):
-    recentSearches = models.ManyToManyField('Search', related_name='searches')
+    savedSearches = models.ManyToManyField('Search', related_name='searches')
     pass
 class Result(models.Model):
     sourceCompany = models.TextField()
