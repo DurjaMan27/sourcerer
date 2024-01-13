@@ -11,7 +11,7 @@
 
 {% block sidebar %}
     {% if user.is_authenticated %}
-        {% for search in recentSearches %}
+        {% for search in sidebarSearch %}
             <a href="{% url 'results' search.searchID %}">
                 <div class="recentSearch">
                     <h1>{{ search.topic }}</h1>
