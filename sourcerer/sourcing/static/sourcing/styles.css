@@ -44,31 +44,40 @@ textarea {
 }
 
 .title {
-    position: relative;
-    text-align: left;
+    position: absolute;
+    text-align: right;
+    width: 19.5%;
     color: blue;
-    padding-left: 15px;
+    padding-left: 10px;
     font-size: 20px;
+    top: 5%;
 }
 
 .title img {
     float: left;
     position: relative;
-    padding-right: 10px;
 }
 
 .google {
-    position: relative;
-    text-align: left;
+    font-size: 10px;
+    position: absolute;
+    text-align: right;
+    width: 22%;
     color: green;
     padding-right: 15px;
-    right: 5%;
-    top: 90%;
+    right: 25px;
+    align-items: flex-end;
+    z-index: 1;
+    bottom: 2.5%;
+    margin-right: 15px;
+    border: 2px solid black;
 }
 
 .google img {
     float: right;
     position: relative;
+    margin-left: 15px;
+    border: 1px solid black;
 }
 
 .nav {
@@ -110,7 +119,7 @@ textarea {
     z-index: 1;
     top: 20%;
     right: 25px;
-    bottom: 5%;
+    bottom: 10%;
     background-color: #ffffff;
     overflow-x: hidden;
     padding-top: 20px;
