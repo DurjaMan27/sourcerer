@@ -2,13 +2,14 @@
 
 {% block body %}
     <h2>All Saved Searches</h2>
-    {% for result in savedSearches %}
-        <div class="result">
-            <h1>{{ result.sourceCompany }}</h1>
-            <h3><a href="{{ result.sourceURL }}" target="_blank">Source Link</a></h3>
-            <p>{{ result.summary }}</p>
-            <strong>{{ result.citation }}</strong>
-        </div>
+    {% for search in savedSearches %}
+        <a href="{% url 'results' search.searchID %}">
+            <div class="recentSearch">
+                <h1>{{ search.topic }}</h1>
+                <h3>{{ search.citationFormat }}</h3>
+                <h4>{{ search.searchDate }}</h4>
+            </div>
+        </a>
     {% endfor %}
 {% endblock %}
 
