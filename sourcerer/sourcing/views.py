@@ -169,7 +169,7 @@ def results(request, searchID):
     results = search.results.all()
     if request.user.is_authenticated:
         searches = request.user.savedSearches.all().order_by('-searchDate')[:3]
-        return render(request, "sourcing/homepage.html", {
+        return render(request, "sourcing/results.html", {
             "search": search,
             "sidebarSearch": searches,
             "results": results,
