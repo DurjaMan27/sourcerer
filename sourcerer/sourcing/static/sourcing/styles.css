@@ -181,3 +181,43 @@ textarea {
     margin-bottom: 15px;
     margin-top: 7px;
 }
+
+.recentSearchAll {
+    display: grid;
+    height: 23vh;
+    width: 95%;
+    outline: 5px black solid;
+    align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 25px;
+    overflow-y: scroll;
+    background-color: white;
+}
+
+.recentSearchAll:hover {
+    outline: 5px blue solid;
+    background-color: #e5ead3;
+}
+
+.recentSearchAll h1 {
+    font-size: 40px;
+    color: black;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.recentSearchAll h3 {
+    font-size: 15px;
+    color: black;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.recentSearchAll h4 {
+    font-size: 20px;
+    text-align: right;
+    color: black;
+    margin-top: 5px;
+    align-items: flex-end;
+}

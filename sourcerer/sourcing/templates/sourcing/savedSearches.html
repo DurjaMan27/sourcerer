@@ -1,10 +1,11 @@
 {% extends "sourcing/layout.html" %}
 
 {% block body %}
-    <h2>All Saved Searches</h2>
+    <a href="{% url 'homepage' %}"><button style="margin-bottom:10px;">Return to Homepage</button></a>
+    <h1>All Saved Searches</h1>
     {% for search in savedSearches %}
         <a href="{% url 'results' search.searchID %}">
-            <div class="recentSearch">
+            <div class="recentSearchAll">
                 <h1>{{ search.topic }}</h1>
                 <h3>{{ search.citationFormat }}</h3>
                 <h4>{{ search.searchDate }}</h4>
