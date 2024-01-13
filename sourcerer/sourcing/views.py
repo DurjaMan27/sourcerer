@@ -215,3 +215,6 @@ def savedSearches(request, username):
 def saveSearch(request, searchID):
     request.user.savedSearches.add(Search.objects.get(pk=searchID))
     return HttpResponseRedirect(reverse('results', kwargs={'searchID': searchID}))
+
+def goToSearch(request, searchID):
+    return HttpResponseRedirect(reverse('results', kwargs={'searchID': searchID}))

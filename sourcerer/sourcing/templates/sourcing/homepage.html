@@ -12,7 +12,7 @@
 {% block sidebar %}
     {% if user.is_authenticated %}
         {% for search in sidebarSearch %}
-            <a href="{% url 'results' search.searchID %}">
+            <a href="{% url 'goToSearch' search.searchID %}">
                 <div class="recentSearch">
                     <h1>{{ search.topic }}</h1>
                     <h3>{{ search.citationFormat }}</h3>

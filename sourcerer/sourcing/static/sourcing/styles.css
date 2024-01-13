@@ -114,8 +114,36 @@ textarea {
 
 .recentSearch {
     display: grid;
-    height: 50px;
-    width: 50px;
+    height: 23vh;
+    width: 90%;
     outline: 3px black solid;
     align-items: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.recentSearch:hover {
+    outline: 5px blue solid;
+    background-color: #e5ead3;
+}
+
+.recentSearch h1 {
+    font-size: 50px;
+    color: black;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.recentSearch h3 {
+    font-size: 15px;
+    color: black;
+    text-align: left;
+    margin-top: 5px;
+}
+
+.recentSearch h4 {
+    font-size: 25px;
+    text-align: right;
+    color: black;
+    margin-top: 5px;
 }
