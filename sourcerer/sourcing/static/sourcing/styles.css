@@ -152,18 +152,32 @@ textarea {
 
 .result {
     display: grid;
-    height: 10%;
-    width: 75%;
+    height: 40%;
+    width: 90%;
     outline: 5px black solid;
     align-items: center;
     padding-left: 15px;
     padding-right: 15px;
     overflow-y: scroll;
+    margin-top: 25px;
+    margin-bottom: 25px;
+    background-color: white;
 }
 
-.recentSearch h1 {
-    font-size: 45px;
+.result h1 {
+    font-size: 35px;
     color: black;
     text-align: left;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.result h3 {
     margin-top: 5px;
+    font-size: 25px;
+}
+
+.result p {
+    margin-bottom: 15px;
+    margin-top: 7px;
 }
