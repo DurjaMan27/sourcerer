@@ -12,7 +12,7 @@ class Result(models.Model):
     summary = models.TextField()
     citation = models.TextField()
 class Search(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, required=False)
     searchID = models.AutoField(primary_key=True)
     topic = models.TextField(max_length=255)
     numSources = models.IntegerField()

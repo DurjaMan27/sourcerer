@@ -83,7 +83,10 @@ def homepage(request):
             numSources = form.cleaned_data["numSources"]
             citation = form.cleaned_data["citationFormat"]
 
-            search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
+            if request.user.is_authenticated:
+                search = Search.objects.create(user=request.user, topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
+            else:
+                search = Search.objects.create(topic=question, numSources=numSources, citationFormat=citation, searchDate=str(date.today()))
 
             query = "My research topic/question is '" + question + "'. Given this question, please give me " + str(numSources) + " sources that will help me conduct research on the topic. "
             query += "These sources must be from reputable newspapers, magazines, encyclopedias, etc. No sources from Wikipedia. "
