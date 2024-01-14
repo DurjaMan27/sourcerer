@@ -3,28 +3,36 @@
 {% block body %}
     <a href="{% url 'homepage' %}"><button style="margin-bottom:10px;">Return to Homepage</button></a>
     <h1>All Saved Searches</h1>
-    {% for search in savedSearches %}
-        <a href="{% url 'results' search.searchID %}">
-            <div class="recentSearchAll">
-                <h1>{{ search.topic }}</h1>
-                <h3>{{ search.citationFormat }}</h3>
-                <h4>{{ search.searchDate }}</h4>
-            </div>
-        </a>
-    {% endfor %}
-{% endblock %}
-
-{% block sidebar %}
-    {% if user.is_authenticated %}
-        {% for search in sidebarSearch %}
+    {% if searchesNumber == 0 %}
+        <h2 style="color: blue">You have no saved searches. Save some searches to see them here!</h2>
+    {% else %}
+        {% for search in savedSearches %}
             <a href="{% url 'results' search.searchID %}">
-                <div class="recentSearch">
+                <div class="recentSearchAll">
                     <h1>{{ search.topic }}</h1>
                     <h3>{{ search.citationFormat }}</h3>
                     <h4>{{ search.searchDate }}</h4>
                 </div>
             </a>
         {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block sidebar %}
+    {% if user.is_authenticated %}
+        {% if searchesNumber == 0 %}
+            <h2 style="color: black; text-align: center;">You have no saved searches. Save some searches to see them here!</h2>
+        {% else %}
+            {% for search in sidebarSearch %}
+                <a href="{% url 'results' search.searchID %}">
+                    <div class="recentSearch">
+                        <h1>{{ search.topic }}</h1>
+                        <h3>{{ search.citationFormat }}</h3>
+                        <h4>{{ search.searchDate }}</h4>
+                    </div>
+                </a>
+            {% endfor %}
+        {% endif %}
     {% else %}
         <a style="text-align: center; padding-top: 15px; font-size: 25px; color: black;">Sign-in to see previous search results.</a>
     {% endif %}

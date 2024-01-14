@@ -26,15 +26,19 @@
 
 {% block sidebar %}
     {% if user.is_authenticated %}
-        {% for search in sidebarSearch %}
-            <a href="{% url 'goToSearch' search.searchID %}">
-                <div class="recentSearch">
-                    <h1>{{ search.topic }}</h1>
-                    <h3>{{ search.citationFormat }}</h3>
-                    <h4>{{ search.searchDate }}</h4>
-                </div>
-            </a>
-        {% endfor %}
+        {% if searchesNumber == 0 %}
+            <h2 style="color: black; text-align: center;">You have no saved searches. Save some searches to see them here!</h2>
+        {% else %}
+            {% for search in sidebarSearch %}
+                <a href="{% url 'goToSearch' search.searchID %}">
+                    <div class="recentSearch">
+                        <h1>{{ search.topic }}</h1>
+                        <h3>{{ search.citationFormat }}</h3>
+                        <h4>{{ search.searchDate }}</h4>
+                    </div>
+                </a>
+            {% endfor %}
+        {% endif %}
     {% else %}
         <a style="text-align: center; padding-top: 15px; font-size: 25px; color: black;">Sign-in to see previous search results.</a>
     {% endif %}

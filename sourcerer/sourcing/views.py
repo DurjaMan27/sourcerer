@@ -143,7 +143,8 @@ def homepage(request):
                 return render(request, "sourcing/homepage.html", {
                     'form': NewSearchForm,
                     'sidebarSearch': searches,
-                    'message': ""
+                    'message': "",
+                    "searchesNumber": len(searches)
                 })
             else:
                 return render(request, "sourcing/homepage.html", {
@@ -157,7 +158,8 @@ def homepage(request):
             return render(request, "sourcing/homepage.html", {
                 'form': NewSearchForm,
                 'sidebarSearch': searches,
-                'message': ""
+                'message': "",
+                "searchesNumber": len(searches)
             })
         else:
             return render(request, "sourcing/homepage.html", {
@@ -175,7 +177,8 @@ def results(request, searchID):
             "search": search,
             "sidebarSearch": searches,
             "results": results,
-            "copy": False
+            "copy": False,
+            "searchesNumber": len(searches)
         })
     else:
         return render(request, "sourcing/results.html", {
@@ -198,7 +201,8 @@ def citations(request, searchID):
             "search": search,
             "sidebarSearch": searches,
             "results": results,
-            "copy": True
+            "copy": True,
+            "searchesNumber": len(searches)
         })
     else:
         return render(request, "sourcing/results.html", {
@@ -213,7 +217,8 @@ def savedSearches(request, username):
     sidebar = searches[::-1][:5]
     return render(request, "sourcing/savedSearches.html", {
         "savedSearches": searches[::-1],
-        "sidebarSearch": sidebar
+        "sidebarSearch": sidebar,
+        "searchesNumber": len(searches)
     })
 
 @login_required
